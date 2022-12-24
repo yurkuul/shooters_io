@@ -17,10 +17,11 @@ public class Birds extends MyActor
         setImage ("Bird 1.png");
     }
     
-    public void act() 
-    {
+    public void act() {
         movement();
         animationCount++;
+        dropTokens();
+        checkAtEdge();
     }    
     
     private void movement() {
@@ -52,10 +53,23 @@ public class Birds extends MyActor
     }
     
     private void dropTokens() {
-        
+        if (Greenfoot.getRandomNumber (10000) < 1) {  //0.01% of the time
+            getWorld().addObject (new BombToken(), getX(), getY());  //A new bomb token is added to the world
+            Greenfoot.playSound ("Tokendrop.wav");  //Plays sound of drop
+        }
+        if (Greenfoot.getRandomNumber (1000) < 1) {  //0.1% of the time
+            getWorld().addObject (new HealthToken(), getX(), getY());  //A new health token is added to the world
+            Greenfoot.playSound ("Tokendrop.wav");  //Plays sound of drop
+        }
+        if (Greenfoot.getRandomNumber (10000) < 1) {  //0.01% of the time
+            getWorld().addObject (new InvincibilityToken(), getX(), getY());  //A new invincibility token is added to the world
+            Greenfoot.playSound ("Tokendrop.wav");  //Plays sound of drop
+        }
     }
     
     private void checkAtEdge() {
-        
+        if (isAtEdge()) {  //if at edge
+            getWorld().removeObject (this); //remove object
+        }
     }
 }
