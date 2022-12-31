@@ -25,11 +25,21 @@ public class Bots extends MyActor {
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act() {
-        
+        movement();  //Movement for Bots
+        checkNearMine();
     }    
     
     private void movement() {
-        
+        move (3);  //Moves by 3
+        if (Greenfoot.getRandomNumber(100) < 10) {  //10% of the time
+            turn (Greenfoot.getRandomNumber(90) - 45);  //The bot will turn anywhere between 45 to -45
+        }
+        if (getX() <= 5 || getX() >= getWorld().getWidth() - 5) {  //Checks if at edge
+            turn (180);  //Turns around
+        }
+        if (getY() <= 5 || getY() >= getWorld().getHeight() - 5) {  //Checks if at edge
+            turn (180);  //Turns around
+        }
     }
     
     private void checkNearPlayers() {
@@ -41,7 +51,9 @@ public class Bots extends MyActor {
     }
     
     private void checkNearMine() {
-        
+        if (isTouching (Explosion.class)) {  //if touching explosion
+            health = 0;  //immediately dies
+        }
     }
     
     public void checkDie() {
