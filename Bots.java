@@ -29,6 +29,7 @@ public class Bots extends MyActor {
         checkNearPlayers();  //Checks if it is near the Player
         checkHit();  //Checks to see if they have been hit
         checkNearMine();
+        checkDie();  //Checks to see if health is at 0
     }    
     
     private void movement() {
@@ -77,6 +78,9 @@ public class Bots extends MyActor {
     }
     
     public void checkDie() {
-        
+        if (health <= 0) {  //If health of the botis less than or equal to 0
+            ((ShooterWorld) getWorld()).update();  //calls update from world
+            getWorld().removeObject (this);  //Removes the bot
+        }
     }
 }
