@@ -26,6 +26,8 @@ public class Bots extends MyActor {
      */
     public void act() {
         movement();  //Movement for Bots
+        checkNearPlayers();  //Checks if it is near the Player
+        checkHit();  //Checks to see if they have been hit
         checkNearMine();
     }    
     
@@ -43,11 +45,29 @@ public class Bots extends MyActor {
     }
     
     private void checkNearPlayers() {
-        
+        List<Bots> enemy = getObjectsInRange (200, Bots.class);  //Creates a list of all the Bots within range
+        List<Player> player = getObjectsInRange (200, Player.class);  //Creates a list of all the Players within range
+        BulletBots bullets = new BulletBots();  // Creates a variable name for adding a new Bullet 
+        if (player.size() > 0 &! hasShot && System.currentTimeMillis() - lastShotTime > shotDelay) {  //Gets the list of the Player's size, and if it is greater than 0 and hasn't shot yet AND if the system time system minus the lastShotTime variable is greater than 500, then
+            hasShot = true;  //hasShot is set to true
+            lastShotTime = System.currentTimeMillis();  //lastShotTime is set to the system time
+            turnTowards (player.get (0).getX(), player.get (0).getY());  //Turns the bot towards the player
+            getWorld().addObject (bullets, getX(), getY());  //Adds a new bullet into the world at the bot's position
+            bullets.setRotation (getRotation());  //Sets the rotation of the bullets to the direction the bot is facing
+        } else {
+            hasShot = false;  //hasShot is set to false
+        }
     }
     
     private void checkHit() {
-        
+        if (isTouching (BulletPlayer.class)) {  //If Bot class is touching the Player's Bullet
+            removeTouching (BulletPlayer.class);  //Removes the bullet
+            health = health - (Greenfoot.getRandomNumber (3) + 5);  //Health of bot decreases by a range of 5 to 8
+            setImage ("BotsHit.png");  //Sets image of the bot to it getting hit
+            move (-4);  //Pushes bot backwards when it is hit
+        } else {
+            setImage ("Bots.png");  //Sets image back to original image
+        }
     }
     
     private void checkNearMine() {
