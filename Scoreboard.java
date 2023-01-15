@@ -17,6 +17,15 @@ public class Scoreboard extends MyActor
     }
 
     public void addToScore() {
-        
+        points++;  //1 is added to variable points
+        scoreboard.clear();  //image gets cleared
+        if(points < 15) {  //if points is less than 15
+            scoreboard.drawString("Score: " + points, 5,25);  //score will increase by 1
+        } else {
+            scoreboard.drawString("You win!!!", 5,25);  //you win text
+            Greenfoot.playSound ("Fanfare.wav");  //plays ending game
+            Greenfoot.stop();  //stops the game
+        }
+        setImage (scoreboard);  //sets the image
     }
 }
