@@ -28,12 +28,28 @@ public class Player extends MyActor
         setImage (player);  //Sets image
     }
 
-    public void act() {
-        
-    }
+     //shows text of these variables in game
+     getWorld().showText ("Ammo: " +ammo, 75, 25);
+     getWorld().showText ("Bombs Count: " +bomb, 103, 50);
+     getWorld().showText ("Invincibility Status: " +invincibility, 137, 75);
+     getWorld().showText ("Lives: " +lives, 65, 470);
+     getWorld().showText ("Health: " +health, 75, 495);
+     movement();
 
-    private void movement() {
-    
+     private void movement() {
+        //movement for player
+        if (((ShooterWorld) getWorld()).wPressed) {
+            setLocation (getX(), getY() - 3);
+        }
+        if (((ShooterWorld) getWorld()).aPressed) {
+            setLocation (getX() - 3, getY());
+        }
+        if (((ShooterWorld) getWorld()).sPressed) {
+            setLocation (getX(), getY() + 3);
+        }
+        if (((ShooterWorld) getWorld()).dPressed) {
+            setLocation (getX() + 3, getY());
+        }
     }
 
     private void aim() {
