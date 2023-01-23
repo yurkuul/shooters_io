@@ -35,6 +35,7 @@ public class Player extends MyActor
      getWorld().showText ("Lives: " +lives, 65, 470);
      getWorld().showText ("Health: " +health, 75, 495);
      movement();
+     aim();  //Allows the player to rotate according to mouse position
 
      private void movement() {
         //movement for player
@@ -53,7 +54,11 @@ public class Player extends MyActor
     }
 
     private void aim() {
-        
+        MouseInfo mouse = Greenfoot.getMouseInfo(); //Grabs MouseInfo from Greenfoot
+        if (mouse != null) //Checks if mouse is not equal to null
+        {  
+            turnTowards(mouse.getX(), mouse.getY());  //Turns Player towards mouse
+        }
     }
 
     private void checkPickUp() {
