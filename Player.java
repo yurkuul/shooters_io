@@ -28,6 +28,7 @@ public class Player extends MyActor
         setImage (player);  //Sets image
     }
 
+    public void act() {
      //shows text of these variables in game
      getWorld().showText ("Ammo: " +ammo, 75, 25);
      getWorld().showText ("Bombs Count: " +bomb, 103, 50);
@@ -36,8 +37,10 @@ public class Player extends MyActor
      getWorld().showText ("Health: " +health, 75, 495);
      movement();
      aim();  //Allows the player to rotate according to mouse position
+     checkPickUp();  //Checks if player has picked up any tokens
+}
 
-     private void movement() {
+    private void movement() {
         //movement for player
         if (((ShooterWorld) getWorld()).wPressed) {
             setLocation (getX(), getY() - 3);
@@ -62,7 +65,27 @@ public class Player extends MyActor
     }
 
     private void checkPickUp() {
-        
+        //BombToken bombCheck = (BombToken) getOneIntersectingObject(BombToken.class);
+        //HealthToken healthCheck = (HealthToken) getOneIntersectingObject(HealthToken.class);
+        //InvincibilityToken InvincibilityCheck = (InvincibilityToken) getOneIntersectingObject(InvincibilityToken.class);
+        if (isTouching (BombToken.class)) {
+            removeTouching (BombToken.class);
+            bomb++;  //Player gets a bomb when touching bomb token
+        }
+        if (isTouching (HealthToken.class)) {  //If touching the health token
+            removeTouching (HealthToken.class);  //It gets removed from the world
+            health = health + 25;  //Player gains 25 health
+        }
+        if (isTouching (InvincibilityToken.class)) {  //If touching the invincibility token
+            removeTouching (InvincibilityToken.class);  //It gets removed from the world
+            invincibilityStartTime = System.currentTimeMillis();  //Sets start time to the system time
+            invincibility = true;  //Sets boolean to true
+            damageProne = false;  //Player does not take damage
+        }
+        if (!damageProne && System.currentTimeMillis() - invincibilityStartTime > 10000) {  //Checks if the player isn't taking damage, then if system time is 10 seconds past the start time
+            damageProne = true;  //Player takes damage again
+            invincibility = false;  //Sets back to false
+        }
     }
     
     private void changeImage() {
