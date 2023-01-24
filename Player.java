@@ -9,8 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author Lisa Zhu
  * @version 2020/01
  */
-public class Player extends MyActor
-{
+public class Player extends MyActor {
     private int health = 100;  //Sets the health of the player  to 100
     private int shoot = 0;  //Counter for each bullet shoot
     private int lives = 3;  //Sets the player to have 5 lives
@@ -29,16 +28,17 @@ public class Player extends MyActor
     }
 
     public void act() {
-     //shows text of these variables in game
-     getWorld().showText ("Ammo: " +ammo, 75, 25);
-     getWorld().showText ("Bombs Count: " +bomb, 103, 50);
-     getWorld().showText ("Invincibility Status: " +invincibility, 137, 75);
-     getWorld().showText ("Lives: " +lives, 65, 470);
-     getWorld().showText ("Health: " +health, 75, 495);
-     movement();
-     aim();  //Allows the player to rotate according to mouse position
-     checkPickUp();  //Checks if player has picked up any tokens
-}
+        //shows text of these variables in game
+        getWorld().showText ("Ammo: " +ammo, 75, 25);
+        getWorld().showText ("Bombs Count: " +bomb, 103, 50);
+        getWorld().showText ("Invincibility Status: " +invincibility, 137, 75);
+        getWorld().showText ("Lives: " +lives, 65, 470);
+        getWorld().showText ("Health: " +health, 75, 495);
+        movement();
+        aim();  //Allows the player to rotate according to mouse position
+        checkPickUp();  //Checks if player has picked up any tokens
+        changeImage();  //Changes image of player
+    }
 
     private void movement() {
         //movement for player
@@ -89,7 +89,15 @@ public class Player extends MyActor
     }
     
     private void changeImage() {
+        //gets the image
+        GreenfootImage player = new GreenfootImage ("Player.png");
+        GreenfootImage playerInvincible = new GreenfootImage ("PlayerInvincible.png");
         
+        if (damageProne == false) {
+            setImage (playerInvincible);  //Sets image to the player with blue glow
+        } else {
+            setImage (player);  //Sets image back to normal player
+        }
     }
     
     private void bomb() {
