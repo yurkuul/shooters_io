@@ -38,6 +38,7 @@ public class Player extends MyActor {
         aim();  //Allows the player to rotate according to mouse position
         checkPickUp();  //Checks if player has picked up any tokens
         changeImage();  //Changes image of player
+        bomb();  //Bomb drop by player
     }
 
     private void movement() {
@@ -101,7 +102,12 @@ public class Player extends MyActor {
     }
     
     private void bomb() {
-        
+        if (bomb >= 1) {  //if Player has bomb
+            if (Greenfoot.isKeyDown ("f") || Greenfoot.isKeyDown ("F")) {
+                getWorld().addObject (new Mine(), getX(), getY());  //adds in bomb
+                bomb--;  //player loses a bomb
+            }
+        }
     }
     
     private void checkShoot() {
