@@ -39,6 +39,8 @@ public class Player extends MyActor {
         checkPickUp();  //Checks if player has picked up any tokens
         changeImage();  //Changes image of player
         bomb();  //Bomb drop by player
+        shoot++;  //A counter for shooting
+        checkShoot();  //Checks if Player has shot
     }
 
     private void movement() {
@@ -111,7 +113,18 @@ public class Player extends MyActor {
     }
     
     private void checkShoot() {
-        
+        MouseInfo right = Greenfoot.getMouseInfo(); //Grabs Right Click Key from MouseInfo from Greenfoot
+        if (right != null) { //Checks if rightclick is not equal to null
+            int buttonNumber = right.getButton();  //Creates a variable for right click
+            if (buttonNumber == 1 && (shoot >= 15) && (hasAmmo == true)) {  //Check if right click is down and if Player is ready to shoot and has ammo
+                BulletPlayer newBullets = new BulletPlayer();  //Creates a variable for a dding a new Bullet of Player
+                getWorld().addObject(newBullets, getX() + 5, getY());  //Adds in the bullet
+                Greenfoot.playSound ("Gunshot.wav");  //Plays sound of shooting
+                newBullets.setRotation (getRotation());  //Sets rotation of bullet to face the shooting direction
+                shoot = 0;  //Sets shoot back to 0 to prepare for another shoot
+                ammo--;  //Each time a player shoots, they lose ammo
+            }
+        }
     }
 
     private void checkOutOfBullets() {
