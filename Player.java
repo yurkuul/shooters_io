@@ -41,6 +41,8 @@ public class Player extends MyActor {
         bomb();  //Bomb drop by player
         shoot++;  //A counter for shooting
         checkShoot();  //Checks if Player has shot
+        checkOutOfBullets();  //Checks if Player has no more ammo
+        reload();  //Allows for player to reload ammo
     }
 
     private void movement() {
@@ -128,11 +130,22 @@ public class Player extends MyActor {
     }
 
     private void checkOutOfBullets() {
-        
+        if (ammo == 0) {  //If ammo count of player is 0
+            hasAmmo = false;  //Player is out of ammo
+        }
     }
     
     private void reload() {
-        
+        // **KEY** Hold down R key to reload
+        if (ammo == 0 && Greenfoot.isKeyDown ("r") || Greenfoot.isKeyDown ("R")) {  //If player is out of ammo and r key is pressed
+            reloadCount--;  //Counter for reload
+            if (reloadCount <= 0) {  //If the counter is less than or equal to 0
+                Greenfoot.playSound ("Reload.mp3");
+                ammo = 15;  //Gives player 15 ammo
+                hasAmmo = true;  //Player now has ammo
+                reloadCount = 50;  //Sets counter back to 50
+            }
+        }
     }
     
     private void checkIfHit() {
