@@ -173,7 +173,11 @@ public class Player extends MyActor {
     }
     
     private void checkDie() {
-        
+        if (health <= 0) {
+            lives--;  //lives loses a point
+            health = 100;  //health is set back to 100
+            setLocation (getWorld().getWidth()/2, getWorld().getHeight()/2);  //player respawn
+        }
     }
 
     private void checkEndGame() {
