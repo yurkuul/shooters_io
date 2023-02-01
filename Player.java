@@ -44,6 +44,9 @@ public class Player extends MyActor {
         checkOutOfBullets();  //Checks if Player has no more ammo
         reload();  //Allows for player to reload ammo
         checkIfHit();  //Checks if Player has been shot
+        checkTouchMine();  //Checks if it is touching mine explosion
+        checkDie();  //Checks to see if Player has died
+        checkEndGame();  //Checks to see if Player has lost all lives
     }
 
     private void movement() {
@@ -164,7 +167,9 @@ public class Player extends MyActor {
     }
 
     private void checkTouchMine() {
-        
+        if (isTouching (Explosion.class)) {
+            health = 0;  //immediately kills player
+        }
     }
     
     private void checkDie() {
