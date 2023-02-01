@@ -43,6 +43,7 @@ public class Player extends MyActor {
         checkShoot();  //Checks if Player has shot
         checkOutOfBullets();  //Checks if Player has no more ammo
         reload();  //Allows for player to reload ammo
+        checkIfHit();  //Checks if Player has been shot
     }
 
     private void movement() {
@@ -149,7 +150,17 @@ public class Player extends MyActor {
     }
     
     private void checkIfHit() {
-        
+        if (isTouching (BulletBots.class) && damageProne == true) {  //Checks to see if it is touching a Bot's bullet and if it can take damage
+            removeTouching (BulletBots.class);  //If return true
+            if (Greenfoot.getRandomNumber (100) < 20) {
+                Greenfoot.playSound ("Hit.wav");  //plays sound 20% of time
+            }
+            health = health - (Greenfoot.getRandomNumber (5) + 5); //Takes 5 to 10 damage from bot bullets
+            setImage ("PlayerHit.png");  //sets image to damaged version of player
+            move (-4);  //moves player back
+        } else if (!isTouching (BulletBots.class) && damageProne == true) {
+            setImage ("Player.png");  //Sets image back
+        }
     }
 
     private void checkTouchMine() {
