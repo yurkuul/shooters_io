@@ -181,6 +181,11 @@ public class Player extends MyActor {
     }
 
     private void checkEndGame() {
-        
+        if (lives == 0) {  //if lives is at 0
+            lives = 0;
+            getWorld().showText("You lose...", 500, 260);  //Shows text saying you lost
+            Greenfoot.playSound ("Lose.wav");  //plays losing sound
+            getWorld().removeObject (this); //object gets removed
+        }
     }
 }
